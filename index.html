@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sukesh Naravi — Senior Backend Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Cabinet+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #080810;
+  --surface: #0f0f1a;
+  --surface2: #161625;
+  --border: rgba(255,255,255,0.06);
+  --border2: rgba(255,255,255,0.12);
+  --text: #ede9fe;
+  --muted: #7c7a9a;
+  --accent: #7c6ffc;
+  --accent2: #b39dff;
+  --teal: #34d4bf;
+  --coral: #f97050;
+  --amber: #f5a623;
+  --display: 'Clash Display', sans-serif;
+  --body: 'Cabinet Grotesk', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* NOISE TEXTURE */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* GRID */
+.grid-bg {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(124,111,252,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124,111,252,0.04) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 0%, black 30%, transparent 100%);
+}
+
+/* GLOW ORBS */
+.orb {
+  position: fixed; border-radius: 50%; pointer-events: none; z-index: 0;
+  filter: blur(80px);
+}
+.orb-1 { width: 500px; height: 500px; top: -150px; right: -100px; background: rgba(124,111,252,0.12); }
+.orb-2 { width: 350px; height: 350px; bottom: 20%; left: -100px; background: rgba(52,212,191,0.07); }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 1.1rem 3rem;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(8,8,16,0.7);
+  backdrop-filter: blur(20px);
+  border-bottom: 0.5px solid var(--border);
+}
+.nav-logo {
+  font-family: var(--display);
+  font-weight: 700; font-size: 1.2rem;
+  color: var(--text); letter-spacing: -0.02em;
+}
+.nav-logo em { color: var(--accent2); font-style: normal; }
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a {
+  color: var(--muted); text-decoration: none;
+  font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em;
+  text-transform: uppercase; transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-cta {
+  background: var(--accent); color: #fff !important;
+  padding: 0.45rem 1.1rem; border-radius: 6px;
+  transition: background 0.2s !important;
+}
+.nav-cta:hover { background: #6c5ffc !important; color: #fff !important; }
+
+/* SECTIONS */
+.section { position: relative; z-index: 1; }
+.inner { max-width: 1080px; margin: 0 auto; padding: 0 2.5rem; }
+
+/* ── HERO ── */
+#hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 9rem 0 5rem;
+}
+.hero-eyebrow {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 2rem;
+  animation: fadeUp 0.7s ease both;
+}
+.eyebrow-line {
+  width: 32px; height: 1px; background: var(--accent2);
+}
+.eyebrow-text {
+  font-size: 0.75rem; font-weight: 500; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--accent2);
+}
+
+.hero-name {
+  font-family: var(--display);
+  font-size: clamp(3.5rem, 8.5vw, 7rem);
+  font-weight: 700; line-height: 0.92;
+  letter-spacing: -0.04em;
+  margin-bottom: 1.8rem;
+  animation: fadeUp 0.7s 0.08s ease both;
+}
+.hero-name .n1 { display: block; color: var(--text); }
+.hero-name .n2 {
+  display: block;
+  -webkit-text-stroke: 1.5px rgba(179,157,255,0.5);
+  color: transparent;
+}
+
+.hero-title {
+  font-size: 1rem; font-weight: 500; color: var(--muted);
+  letter-spacing: 0.02em; margin-bottom: 1.5rem;
+  animation: fadeUp 0.7s 0.16s ease both;
+}
+.hero-title span { color: var(--accent2); }
+
+.hero-tagline {
+  max-width: 580px; font-size: 1.15rem; color: rgba(237,233,254,0.75);
+  line-height: 1.75; margin-bottom: 2.5rem;
+  animation: fadeUp 0.7s 0.22s ease both;
+}
+
+.hero-actions {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+  animation: fadeUp 0.7s 0.28s ease both;
+}
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 0.8rem 1.8rem; border-radius: 8px;
+  font-size: 0.9rem; font-weight: 500; text-decoration: none;
+  transition: transform 0.15s, box-shadow 0.2s;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn-filled {
+  background: var(--accent); color: #fff;
+  box-shadow: 0 0 30px rgba(124,111,252,0.25);
+}
+.btn-filled:hover { box-shadow: 0 0 40px rgba(124,111,252,0.4); }
+.btn-outline {
+  background: transparent; color: var(--text);
+  border: 0.5px solid var(--border2);
+}
+.btn-outline:hover { border-color: var(--accent2); }
+
+.hero-stats {
+  display: flex; gap: 3.5rem; margin-top: 5rem;
+  padding-top: 2.5rem;
+  border-top: 0.5px solid var(--border);
+  animation: fadeUp 0.7s 0.36s ease both;
+}
+.stat { }
+.stat-num {
+  font-family: var(--display); font-size: 2.4rem; font-weight: 700;
+  color: var(--text); letter-spacing: -0.04em; line-height: 1;
+}
+.stat-num sup { font-size: 1.2rem; color: var(--accent2); }
+.stat-lbl { font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
+
+/* ── SECTION HEADER ── */
+.sec-header { margin-bottom: 3.5rem; }
+.sec-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-bottom: 0.75rem;
+}
+.badge-num {
+  font-family: var(--display); font-size: 0.72rem; font-weight: 700;
+  color: var(--accent); letter-spacing: 0.1em;
+}
+.badge-line { width: 24px; height: 1px; background: var(--accent); }
+.badge-label {
+  font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted);
+}
+.sec-h2 {
+  font-family: var(--display); font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700; letter-spacing: -0.03em; line-height: 1.05;
+  color: var(--text);
+}
+.sec-sub { color: var(--muted); font-size: 1rem; margin-top: 0.75rem; line-height: 1.7; max-width: 500px; }
+
+/* ── ABOUT ── */
+#about { padding: 7rem 0; }
+.about-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 5rem; align-items: start; }
+.about-left { }
+.about-right { }
+.about-body {
+  font-size: 1rem; color: rgba(237,233,254,0.7); line-height: 1.85;
+}
+.about-body p + p { margin-top: 1.25rem; }
+.about-body strong { color: var(--text); font-weight: 500; }
+
+.domain-pills { display: flex; gap: 0.75rem; margin-top: 2rem; flex-wrap: wrap; }
+.domain-pill {
+  padding: 0.5rem 1rem; border-radius: 100px;
+  font-size: 0.8rem; font-weight: 500;
+  border: 0.5px solid;
+}
+.pill-health { background: rgba(52,212,191,0.08); color: var(--teal); border-color: rgba(52,212,191,0.25); }
+.pill-data { background: rgba(245,166,35,0.08); color: var(--amber); border-color: rgba(245,166,35,0.25); }
+
+/* ── STRENGTHS ── */
+#strengths { padding: 7rem 0; background: linear-gradient(180deg, transparent, rgba(124,111,252,0.03), transparent); }
+.strengths-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 0.5px solid var(--border); border-radius: 16px; overflow: hidden; }
+.strength-card {
+  background: var(--surface); padding: 2rem;
+  transition: background 0.2s;
+}
+.strength-card:hover { background: var(--surface2); }
+.s-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.25rem; font-size: 18px;
+}
+.s-icon-1 { background: rgba(124,111,252,0.12); }
+.s-icon-2 { background: rgba(52,212,191,0.10); }
+.s-icon-3 { background: rgba(249,112,80,0.10); }
+.s-icon-4 { background: rgba(245,166,35,0.10); }
+.s-icon-5 { background: rgba(179,157,255,0.10); }
+.s-title {
+  font-family: var(--display); font-size: 1rem; font-weight: 600;
+  color: var(--text); margin-bottom: 0.6rem;
+}
+.s-desc { font-size: 0.87rem; color: var(--muted); line-height: 1.7; }
+
+/* ── EXPERIENCE ── */
+#experience { padding: 7rem 0; }
+.exp-layout { display: grid; grid-template-columns: 200px 1fr; gap: 0; }
+.exp-nav { position: sticky; top: 7rem; height: fit-content; padding-right: 3rem; }
+.exp-nav-item {
+  display: block; font-size: 0.8rem; color: var(--muted); padding: 0.5rem 0;
+  cursor: pointer; transition: color 0.2s; border: none; background: none;
+  text-align: left; font-family: var(--body);
+}
+.exp-nav-item:hover { color: var(--text); }
+.exp-nav-item.active { color: var(--accent2); font-weight: 500; }
+
+.exp-entries { border-left: 0.5px solid var(--border2); padding-left: 3rem; }
+.exp-entry { padding-bottom: 3.5rem; margin-bottom: 0.5rem; position: relative; }
+.exp-entry:last-child { padding-bottom: 0; }
+.exp-dot {
+  position: absolute; left: -3rem; top: 6px;
+  width: 11px; height: 11px; border-radius: 50%;
+  border: 2px solid var(--border2); background: var(--bg);
+  transform: translateX(-5px);
+  transition: border-color 0.2s, background 0.2s;
+}
+.exp-entry:first-child .exp-dot { border-color: var(--accent); background: var(--accent); }
+.exp-entry:hover .exp-dot { border-color: var(--accent2); }
+
+.exp-period { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.04em; margin-bottom: 0.35rem; }
+.exp-role { font-family: var(--display); font-size: 1.2rem; font-weight: 600; color: var(--text); margin-bottom: 0.2rem; }
+.exp-company { font-size: 0.88rem; color: var(--accent2); font-weight: 500; margin-bottom: 1rem; }
+.exp-bullets { list-style: none; margin-bottom: 1rem; }
+.exp-bullets li {
+  font-size: 0.9rem; color: rgba(237,233,254,0.65); line-height: 1.7;
+  padding: 3px 0 3px 1.25rem; position: relative;
+}
+.exp-bullets li::before {
+  content: ''; position: absolute; left: 0; top: 12px;
+  width: 5px; height: 1px; background: var(--teal);
+}
+.exp-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.exp-tag {
+  font-size: 0.68rem; padding: 2px 8px; border-radius: 4px;
+  background: rgba(124,111,252,0.08); color: var(--accent2);
+  border: 0.5px solid rgba(124,111,252,0.18); font-weight: 500;
+}
+
+/* ── PROJECTS ── */
+#projects { padding: 7rem 0; }
+.projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.proj-card {
+  background: var(--surface); border: 0.5px solid var(--border);
+  border-radius: 14px; padding: 1.75rem;
+  display: flex; flex-direction: column;
+  transition: border-color 0.25s, transform 0.2s;
+  position: relative; overflow: hidden;
+}
+.proj-card::after {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  opacity: 0; transition: opacity 0.25s;
+}
+.proj-card:hover { border-color: var(--border2); transform: translateY(-3px); }
+.proj-card:hover::after { opacity: 1; }
+.proj-card.c-purple::after { background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+.proj-card.c-teal::after { background: linear-gradient(90deg, var(--teal), #67e8f9); }
+.proj-card.c-coral::after { background: linear-gradient(90deg, var(--coral), var(--amber)); }
+
+.proj-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem; }
+.proj-icon {
+  width: 38px; height: 38px; border-radius: 9px;
+  display: flex; align-items: center; justify-content: center; font-size: 17px;
+}
+.proj-icon-p { background: rgba(124,111,252,0.12); }
+.proj-icon-t { background: rgba(52,212,191,0.10); }
+.proj-icon-c { background: rgba(249,112,80,0.10); }
+
+.proj-metric-badge {
+  font-size: 0.68rem; padding: 2px 8px; border-radius: 100px; font-weight: 600;
+  white-space: nowrap;
+}
+.proj-metric-badge.pm-p { background: rgba(124,111,252,0.12); color: var(--accent2); border: 0.5px solid rgba(124,111,252,0.25); }
+.proj-metric-badge.pm-t { background: rgba(52,212,191,0.1); color: var(--teal); border: 0.5px solid rgba(52,212,191,0.25); }
+.proj-metric-badge.pm-c { background: rgba(249,112,80,0.1); color: var(--coral); border: 0.5px solid rgba(249,112,80,0.25); }
+
+.proj-name { font-family: var(--display); font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 0.5rem; }
+.proj-meta { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.75rem; }
+.proj-desc { font-size: 0.86rem; color: rgba(237,233,254,0.6); line-height: 1.7; flex: 1; }
+.proj-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 1.25rem; }
+.proj-tag {
+  font-size: 0.65rem; padding: 2px 7px; border-radius: 3px;
+  background: rgba(255,255,255,0.04); color: var(--muted);
+  border: 0.5px solid var(--border);
+}
+
+/* ── SKILLS ── */
+#skills { padding: 7rem 0; }
+.skills-outer { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 0.5px solid var(--border); border-radius: 16px; overflow: hidden; }
+.skill-group { background: var(--surface); padding: 1.75rem 2rem; }
+.skill-group-title {
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 1rem;
+}
+.skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.skill-tag {
+  font-size: 0.78rem; padding: 4px 11px; border-radius: 100px;
+  background: rgba(255,255,255,0.04); color: rgba(237,233,254,0.75);
+  border: 0.5px solid var(--border2); font-weight: 400;
+  transition: border-color 0.2s, color 0.2s;
+}
+.skill-tag:hover { border-color: var(--accent2); color: var(--accent2); }
+.skill-tag.primary { background: rgba(124,111,252,0.1); color: var(--accent2); border-color: rgba(124,111,252,0.25); }
+
+/* ── CONTACT ── */
+#contact { padding: 7rem 0 6rem; }
+.contact-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 5rem; align-items: center; }
+.contact-left { }
+.contact-statement {
+  font-family: var(--display); font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 700; line-height: 1.15; letter-spacing: -0.03em;
+  color: var(--text); margin-bottom: 1.5rem;
+}
+.contact-statement em { color: var(--accent2); font-style: normal; }
+.contact-note { font-size: 0.92rem; color: var(--muted); line-height: 1.75; }
+.contact-links { display: flex; flex-direction: column; gap: 0.75rem; }
+.contact-link {
+  display: flex; align-items: center; gap: 14px;
+  background: var(--surface); border: 0.5px solid var(--border);
+  border-radius: 10px; padding: 1rem 1.25rem;
+  text-decoration: none; color: var(--text);
+  transition: border-color 0.2s, transform 0.15s;
+}
+.contact-link:hover { border-color: var(--border2); transform: translateX(4px); }
+.cl-icon {
+  width: 34px; height: 34px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; flex-shrink: 0;
+}
+.cl-label { font-size: 0.72rem; color: var(--muted); margin-bottom: 1px; }
+.cl-value { font-size: 0.85rem; font-weight: 500; color: var(--text); }
+
+/* FOOTER */
+footer {
+  position: relative; z-index: 1;
+  border-top: 0.5px solid var(--border);
+  padding: 2rem 2.5rem;
+  display: flex; justify-content: space-between; align-items: center;
+  max-width: 1080px; margin: 0 auto;
+}
+.footer-name { font-family: var(--display); font-size: 0.9rem; font-weight: 600; color: var(--muted); }
+.footer-copy { font-size: 0.78rem; color: rgba(124,100,200,0.4); }
+
+/* DIVIDER */
+.sec-divider { position: relative; z-index: 1; height: 0.5px; background: linear-gradient(90deg, transparent, var(--border2), transparent); margin: 0; }
+
+/* ANIMATIONS */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { gap: 1.5rem; }
+  .inner { padding: 0 1.5rem; }
+  .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .strengths-grid { grid-template-columns: 1fr 1fr; }
+  .projects-grid { grid-template-columns: 1fr 1fr; }
+  .exp-layout { grid-template-columns: 1fr; }
+  .exp-nav { display: none; }
+  .exp-entries { padding-left: 1.5rem; }
+  .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .skills-outer { grid-template-columns: 1fr; }
+  .hero-stats { gap: 2rem; flex-wrap: wrap; }
+}
+@media (max-width: 600px) {
+  .nav-links { display: none; }
+  .hero-name { font-size: 3rem; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .strengths-grid { grid-template-columns: 1fr; }
+  footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">SN<em>.</em></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero" class="section">
+  <div class="inner">
+    <div class="hero-eyebrow">
+      <span class="eyebrow-line"></span>
+      <span class="eyebrow-text">Senior Backend Engineer · Distributed Systems & Cloud</span>
+    </div>
+    <h1 class="hero-name">
+      <span class="n1">Sukesh</span>
+      <span class="n2">Naravi</span>
+    </h1>
+    <p class="hero-title">
+      Java · Spring Boot · AWS · <span>Event-Driven Architecture</span>
+    </p>
+    <p class="hero-tagline">
+      I architect backend systems that perform when it matters most — built for scale, engineered for reliability.
+    </p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn btn-filled">View Projects</a>
+      <a href="#contact" class="btn btn-outline">Get in Touch</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">6<sup>+</sup></div>
+        <div class="stat-lbl">Years in Java</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">60<sup>%</sup></div>
+        <div class="stat-lbl">Latency cut, SyncX</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">200<sup>ms</sup></div>
+        <div class="stat-lbl">ECG latency (from ~60s)</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">2</div>
+        <div class="stat-lbl">Industries mastered</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sec-divider"></div>
+
+<!-- ABOUT -->
+<section id="about" class="section">
+  <div class="inner">
+    <div class="about-grid reveal">
+      <div class="about-left">
+        <div class="sec-header">
+          <div class="sec-badge">
+            <span class="badge-num">01</span>
+            <span class="badge-line"></span>
+            <span class="badge-label">About</span>
+          </div>
+          <h2 class="sec-h2">About<br>Me</h2>
+          <p class="sec-sub">Engineer. Systems thinker. Problem solver.</p>
+        </div>
+        <div class="domain-pills">
+          <span class="domain-pill pill-health">Healthcare Technology</span>
+          <span class="domain-pill pill-data">Data Engineering</span>
+        </div>
+      </div>
+      <div class="about-right">
+        <div class="about-body">
+          <p>I'm a Senior Backend Engineer with <strong>6 years of hands-on experience</strong> building distributed, cloud-native systems in Java, Spring Boot, and AWS. My work spans the full backend lifecycle — from system design and API architecture to async messaging pipelines, embedded integrations, and serverless deployments.</p>
+          <p>I've worked across two demanding domains: <strong>healthcare technology</strong>, where data accuracy and low latency directly affect patient outcomes, and <strong>data engineering</strong>, where performance and reliability underpin every client decision. In both, the stakes are real — and the systems have to hold.</p>
+          <p>I think in systems. Whether I'm replacing a bottlenecked REST pipeline with async messaging, designing a TCP server for device communication, or structuring serverless batch workflows, I focus on <strong>correctness first, performance second, and maintainability always</strong>. I'm equally comfortable owning architecture decisions and writing the code that executes them.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sec-divider"></div>
+
+<!-- STRENGTHS -->
+<section id="strengths" class="section">
+  <div class="inner">
+    <div class="sec-header reveal">
+      <div class="sec-badge">
+        <span class="badge-num">02</span>
+        <span class="badge-line"></span>
+        <span class="badge-label">Strengths</span>
+      </div>
+      <h2 class="sec-h2">What I Bring</h2>
+      <p class="sec-sub">Five pillars rooted in real systems I've built.</p>
+    </div>
+    <div class="strengths-grid reveal">
+      <div class="strength-card">
+        <div class="s-icon s-icon-1">⬡</div>
+        <div class="s-title">Backend System Design</div>
+        <div class="s-desc">Designs distributed backends from scratch — RESTful APIs, TCP servers, async pipelines, and serverless workflows. Comfortable owning the architecture end-to-end, from whiteboard to production.</div>
+      </div>
+      <div class="strength-card">
+        <div class="s-icon s-icon-2">⚡</div>
+        <div class="s-title">Latency & Performance Tuning</div>
+        <div class="s-desc">Track record of diagnosing real bottlenecks and fixing them fundamentally — including dropping ECG data latency from ~60 seconds to under 600ms by rethinking the entire communication model.</div>
+      </div>
+      <div class="strength-card">
+        <div class="s-icon s-icon-3">☁</div>
+        <div class="s-title">Cloud-Native on AWS</div>
+        <div class="s-desc">Designs production systems across Lambda, Kinesis, SQS, ECS, Fargate, DynamoDB, and Step Functions — not just individual services, but how they compose into reliable, scalable architecture.</div>
+      </div>
+      <div class="strength-card">
+        <div class="s-icon s-icon-4">⇄</div>
+        <div class="s-title">Async & Event-Driven Architecture</div>
+        <div class="s-desc">Deep experience with RabbitMQ and Kinesis for building decoupled, high-throughput systems — replacing synchronous bottlenecks with scalable messaging patterns that hold under load.</div>
+      </div>
+      <div class="strength-card">
+        <div class="s-icon s-icon-5">◈</div>
+        <div class="s-title">Breadth Across the Stack</div>
+        <div class="s-desc">From Embedded C on ESP32 to Angular dashboards to serverless cloud pipelines — understands how the full system fits together, which makes every architecture decision sharper and more grounded.</div>
+      </div>
+      <div class="strength-card" style="background: var(--bg); display:flex; align-items:center; justify-content:center;">
+        <div style="text-align:center;">
+          <div style="font-family:var(--display); font-size:2.5rem; font-weight:700; color:var(--accent2); letter-spacing:-0.04em;">4</div>
+          <div style="font-size:0.8rem; color:var(--muted); margin-top:4px;">Companies.<br>2 Industries.<br>1 Standard.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sec-divider"></div>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="section">
+  <div class="inner">
+    <div class="sec-header reveal">
+      <div class="sec-badge">
+        <span class="badge-num">03</span>
+        <span class="badge-line"></span>
+        <span class="badge-label">Experience</span>
+      </div>
+      <h2 class="sec-h2">Career History</h2>
+      <p class="sec-sub">6+ years across healthcare platforms and data engineering.</p>
+    </div>
+    <div class="exp-layout">
+      <div class="exp-nav reveal">
+        <button class="exp-nav-item active" onclick="scrollToExp('e1')">RED Health</button>
+        <button class="exp-nav-item" onclick="scrollToExp('e2')">RTWO (II)</button>
+        <button class="exp-nav-item" onclick="scrollToExp('e3')">Inverence</button>
+        <button class="exp-nav-item" onclick="scrollToExp('e4')">RTWO (I)</button>
+      </div>
+      <div class="exp-entries reveal">
+
+        <div class="exp-entry" id="e1">
+          <div class="exp-dot"></div>
+          <div class="exp-period">Sep 2024 – Mar 2026</div>
+          <div class="exp-role">Software Development Engineer II</div>
+          <div class="exp-company">RED Health · Bengaluru</div>
+          <ul class="exp-bullets">
+            <li>Architected SyncX — collects live patient monitor data via Android and streams into AWS Kinesis for real-time clinical access in transit</li>
+            <li>Designed a scalable TCP server for SOS pendant devices with REST APIs and DynamoDB-backed real-time location tracking</li>
+            <li>Built a serverless invoice processing system for multi-hospital billing using AWS Step Functions, Lambda, SQS, ECS, and Fargate</li>
+            <li>Applied CI/CD best practices and integrated CloudWatch monitoring across all production services</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="exp-tag">Java</span><span class="exp-tag">Spring Boot</span><span class="exp-tag">AWS Kinesis</span>
+            <span class="exp-tag">DynamoDB</span><span class="exp-tag">Lambda</span><span class="exp-tag">SQS</span>
+            <span class="exp-tag">ECS / Fargate</span><span class="exp-tag">Step Functions</span>
+            <span class="exp-tag">Node.js</span><span class="exp-tag">PostgreSQL</span>
+          </div>
+        </div>
+
+        <div class="exp-entry" id="e2">
+          <div class="exp-dot"></div>
+          <div class="exp-period">Aug 2022 – Aug 2024</div>
+          <div class="exp-role">Technical Specialist</div>
+          <div class="exp-company">RTWO Healthcare Solutions · Bengaluru</div>
+          <ul class="exp-bullets">
+            <li>Enhanced Spring Boot microservices for the D Assist clinical platform, supporting high-volume real-time medical data ingestion</li>
+            <li>Replaced REST polling with RabbitMQ async messaging — slashed ECG data latency from ~1 min to 200–600ms</li>
+            <li>Designed the Medication & Fluids Charts backend module, improving clinical documentation accuracy by ~30%</li>
+            <li>Integrated Plotly for live frontend data visualisation; built and maintained Jenkins CI/CD pipelines</li>
+            <li>Conducted code reviews and enforced DevOps standards across development and QA environments</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="exp-tag">Java</span><span class="exp-tag">Spring Boot</span><span class="exp-tag">RabbitMQ</span>
+            <span class="exp-tag">MongoDB</span><span class="exp-tag">Jenkins</span><span class="exp-tag">Angular 8</span><span class="exp-tag">Plotly</span>
+          </div>
+        </div>
+
+        <div class="exp-entry" id="e3">
+          <div class="exp-dot"></div>
+          <div class="exp-period">Nov 2020 – Jul 2022</div>
+          <div class="exp-role">Software Engineer</div>
+          <div class="exp-company">Inverence · Spain (Remote)</div>
+          <ul class="exp-bullets">
+            <li>Built backend services for a data modelling and forecasting platform processing high-volume time-series data</li>
+            <li>Developed a full-stack client dashboard replacing a manual data-entry workflow — visualising keyword trends, subscription usage, and live processing logs</li>
+            <li>Implemented subscription-based access control and usage limits to govern client interactions with the data engine</li>
+            <li>Optimised workflows so new keywords triggered live processing while existing ones returned instant cached results</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="exp-tag">TypeScript</span><span class="exp-tag">Node.js</span><span class="exp-tag">Angular 8</span>
+            <span class="exp-tag">PostgreSQL</span><span class="exp-tag">TypeORM</span>
+          </div>
+        </div>
+
+        <div class="exp-entry" id="e4">
+          <div class="exp-dot"></div>
+          <div class="exp-period">Jun 2019 – Oct 2020</div>
+          <div class="exp-role">Software Engineer</div>
+          <div class="exp-company">RTWO Healthcare Solutions · Bengaluru</div>
+          <ul class="exp-bullets">
+            <li>Deployed and supported RealTimeDeviceConnect at hospital sites — configured networks to connect medical devices on Linux</li>
+            <li>Built REST APIs for PTZ camera control and integrated them into an AngularJS frontend</li>
+            <li>Engineered an ESP32-based embedded solution for medical data acquisition, eliminating laptop dependency at bedsides</li>
+            <li>Implemented backend for a teleconsultation platform using JWT auth, Spring Boot, and MongoDB</li>
+            <li>Acquired real-time device data from BPL, GE, and Draeger hardware; mentored junior engineers</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="exp-tag">Java</span><span class="exp-tag">Spring Boot</span><span class="exp-tag">MongoDB</span>
+            <span class="exp-tag">Embedded C</span><span class="exp-tag">ESP32</span><span class="exp-tag">AngularJS</span><span class="exp-tag">RabbitMQ</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sec-divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects" class="section">
+  <div class="inner">
+    <div class="sec-header reveal">
+      <div class="sec-badge">
+        <span class="badge-num">04</span>
+        <span class="badge-line"></span>
+        <span class="badge-label">Projects</span>
+      </div>
+      <h2 class="sec-h2">Key Projects</h2>
+      <p class="sec-sub">Systems built for demanding environments where performance has consequences.</p>
+    </div>
+    <div class="projects-grid reveal">
+
+      <div class="proj-card c-purple">
+        <div class="proj-header">
+          <div class="proj-icon proj-icon-p">📡</div>
+          <span class="proj-metric-badge pm-p">60%+ latency cut</span>
+        </div>
+        <div class="proj-name">SyncX — Patient Vitals Streaming</div>
+        <div class="proj-meta">Healthcare · AWS Kinesis · Java · Android</div>
+        <div class="proj-desc">End-to-end platform streaming live patient monitor data from ambulances into AWS Kinesis. Backend microservices process and surface data to clinical teams, enabling real-time assessment before hospital arrival.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">Java</span><span class="proj-tag">Spring Boot</span><span class="proj-tag">Kinesis</span><span class="proj-tag">AWS</span>
+        </div>
+      </div>
+
+      <div class="proj-card c-teal">
+        <div class="proj-header">
+          <div class="proj-icon proj-icon-t">🆘</div>
+          <span class="proj-metric-badge pm-t">~40% faster response</span>
+        </div>
+        <div class="proj-name">SOS Pendant Emergency Backend</div>
+        <div class="proj-meta">Healthcare · TCP · DynamoDB · REST</div>
+        <div class="proj-desc">Scalable TCP server handling real-time SOS pendant communication. Exposes REST APIs for dispatch integration and persists live GPS data in DynamoDB — turning a wearable button into a coordinated emergency response.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">Java</span><span class="proj-tag">TCP</span><span class="proj-tag">DynamoDB</span><span class="proj-tag">REST</span>
+        </div>
+      </div>
+
+      <div class="proj-card c-coral">
+        <div class="proj-header">
+          <div class="proj-icon proj-icon-c">❤️</div>
+          <span class="proj-metric-badge pm-c">~60s → 200ms</span>
+        </div>
+        <div class="proj-name">D Assist — ECG Pipeline Overhaul</div>
+        <div class="proj-meta">Healthcare · RabbitMQ · Async Architecture</div>
+        <div class="proj-desc">Diagnosed a core bottleneck where REST polling introduced ~1 min ECG lag. Replaced the entire communication layer with RabbitMQ async messaging — achieving near real-time performance without a full system rewrite.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">RabbitMQ</span><span class="proj-tag">Spring Boot</span><span class="proj-tag">MongoDB</span>
+        </div>
+      </div>
+
+      <div class="proj-card c-purple">
+        <div class="proj-header">
+          <div class="proj-icon proj-icon-p">🏥</div>
+          <span class="proj-metric-badge pm-p">Zero-ops billing</span>
+        </div>
+        <div class="proj-name">Multi-Hospital Invoice Engine</div>
+        <div class="proj-meta">Healthcare · Step Functions · Lambda · Fargate</div>
+        <div class="proj-desc">Serverless batch processing for invoice generation across hospital networks — orchestrated with Step Functions, compute on Lambda, queuing via SQS, containers on ECS/Fargate. Full order-level status via REST APIs.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">Lambda</span><span class="proj-tag">SQS</span><span class="proj-tag">Fargate</span><span class="proj-tag">Step Functions</span>
+        </div>
+      </div>
+
+      <div class="proj-card c-teal">
+        <div class="proj-header">
+          <div class="proj-icon proj-icon-t">📊</div>
+          <span class="proj-metric-badge pm-t">~25% fewer issues</span>
+        </div>
+        <div class="proj-name">Client Forecasting Dashboard</div>
+        <div class="proj-meta">Data Engineering · Node.js · Angular · PostgreSQL</div>
+        <div class="proj-desc">Full-stack dashboard replacing a manual data-entry workflow. Clients input forecasting parameters, visualise keyword trends, monitor subscription usage, and observe live processing — all in one interface.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">Node.js</span><span class="proj-tag">Angular</span><span class="proj-tag">PostgreSQL</span><span class="proj-tag">TypeORM</span>
+        </div>
+      </div>
+
+      <div class="proj-card c-coral">
+        <div class="proj-header">
+          <div class="proj-icon proj-icon-c">🔌</div>
+          <span class="proj-metric-badge pm-c">~35% cost reduction</span>
+        </div>
+        <div class="proj-name">ESP32 Medical Data Bridge</div>
+        <div class="proj-meta">Healthcare · Embedded C · ESP32 · Hardware</div>
+        <div class="proj-desc">Embedded solution using ESP32 to collect data directly from medical devices and transmit to backend — eliminating the laptop previously required at every bedside. A hardware-level fix with immediate operational impact.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">Embedded C</span><span class="proj-tag">ESP32</span><span class="proj-tag">Java</span><span class="proj-tag">Spring Boot</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="sec-divider"></div>
+
+<!-- SKILLS -->
+<section id="skills" class="section">
+  <div class="inner">
+    <div class="sec-header reveal">
+      <div class="sec-badge">
+        <span class="badge-num">05</span>
+        <span class="badge-line"></span>
+        <span class="badge-label">Skills</span>
+      </div>
+      <h2 class="sec-h2">Technical Stack</h2>
+      <p class="sec-sub">A focused, battle-tested stack — no fluff.</p>
+    </div>
+    <div class="skills-outer reveal">
+      <div class="skill-group">
+        <div class="skill-group-title">Backend & Architecture</div>
+        <div class="skill-tags">
+          <span class="skill-tag primary">Java (6 yrs)</span>
+          <span class="skill-tag primary">Spring Boot</span>
+          <span class="skill-tag">Microservices</span>
+          <span class="skill-tag">REST APIs</span>
+          <span class="skill-tag">TCP Servers</span>
+          <span class="skill-tag">JWT Auth</span>
+          <span class="skill-tag">Node.js</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">AWS Cloud</div>
+        <div class="skill-tags">
+          <span class="skill-tag primary">Kinesis</span>
+          <span class="skill-tag primary">Lambda</span>
+          <span class="skill-tag">SQS</span>
+          <span class="skill-tag">Step Functions</span>
+          <span class="skill-tag">ECS</span>
+          <span class="skill-tag">Fargate</span>
+          <span class="skill-tag">DynamoDB</span>
+          <span class="skill-tag">CloudWatch</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Data & Messaging</div>
+        <div class="skill-tags">
+          <span class="skill-tag primary">RabbitMQ</span>
+          <span class="skill-tag">PostgreSQL</span>
+          <span class="skill-tag">MongoDB</span>
+          <span class="skill-tag">TypeORM</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">DevOps & Tools</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Jenkins CI/CD</span>
+          <span class="skill-tag">Linux</span>
+          <span class="skill-tag">Spring Test</span>
+          <span class="skill-tag">Code Review</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Frontend & Embedded</div>
+        <div class="skill-tags">
+          <span class="skill-tag">TypeScript</span>
+          <span class="skill-tag">Angular 8</span>
+          <span class="skill-tag">Plotly</span>
+          <span class="skill-tag">Embedded C</span>
+          <span class="skill-tag">ESP32</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Domain Experience</div>
+        <div class="skill-tags">
+          <span class="skill-tag primary">Healthcare Technology</span>
+          <span class="skill-tag primary">Data Engineering</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sec-divider"></div>
+
+<!-- CONTACT -->
+<section id="contact" class="section">
+  <div class="inner">
+    <div class="contact-grid reveal">
+      <div class="contact-left">
+        <div class="sec-badge" style="margin-bottom:0.75rem;">
+          <span class="badge-num">06</span>
+          <span class="badge-line"></span>
+          <span class="badge-label">Contact</span>
+        </div>
+        <div class="contact-statement">
+          Open to roles <em>anywhere</em> in the world.
+        </div>
+        <p class="contact-note">
+          Targeting Senior Backend Engineer and Senior Software Engineer roles in Healthcare Tech, Fintech, SaaS, and beyond. Open to relocation anywhere — let's build something that matters.
+        </p>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:sukeshpoojary190@gmail.com" class="contact-link">
+          <div class="cl-icon" style="background:rgba(124,111,252,0.12);">✉</div>
+          <div>
+            <div class="cl-label">Email</div>
+            <div class="cl-value">sukeshpoojary190@gmail.com</div>
+          </div>
+        </a>
+        <a href="tel:+917338512343" class="contact-link">
+          <div class="cl-icon" style="background:rgba(52,212,191,0.10);">📱</div>
+          <div>
+            <div class="cl-label">Phone</div>
+            <div class="cl-value">+91 7338512343</div>
+          </div>
+        </a>
+        <a href="https://www.linkedin.com/in/sukesh-naravi/" target="_blank" class="contact-link">
+          <div class="cl-icon" style="background:rgba(0,119,181,0.12);">in</div>
+          <div>
+            <div class="cl-label">LinkedIn</div>
+            <div class="cl-value">linkedin.com/in/sukesh-naravi</div>
+          </div>
+        </a>
+        <a href="https://github.com/Sukesh190" target="_blank" class="contact-link">
+          <div class="cl-icon" style="background:rgba(255,255,255,0.05);">⌥</div>
+          <div>
+            <div class="cl-label">GitHub</div>
+            <div class="cl-value">github.com/Sukesh190</div>
+          </div>
+        </a>
+        <a href="https://www.instagram.com/sukesh.naravi/" target="_blank" class="contact-link">
+          <div class="cl-icon" style="background:rgba(225,48,108,0.10);">◎</div>
+          <div>
+            <div class="cl-label">Instagram</div>
+            <div class="cl-value">instagram.com/sukesh.naravi</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-name">Sukesh Naravi</div>
+  <div class="footer-copy">Senior Backend Engineer · Distributed Systems & Cloud · 2025</div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => observer.observe(r));
+
+  // Exp nav highlight
+  function scrollToExp(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  const expEntries = document.querySelectorAll('.exp-entry');
+  const navItems = document.querySelectorAll('.exp-nav-item');
+  const expObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const id = e.target.id;
+        navItems.forEach((n, i) => {
+          n.classList.toggle('active', ['e1','e2','e3','e4'][i] === id);
+        });
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  expEntries.forEach(e => expObserver.observe(e));
+</script>
+</body>
+</html>
