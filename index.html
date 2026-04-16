@@ -353,6 +353,38 @@ nav {
 .skill-tag:hover { border-color: var(--accent2); color: var(--accent2); }
 .skill-tag.primary { background: rgba(124,111,252,0.1); color: var(--accent2); border-color: rgba(124,111,252,0.25); }
 
+/* ── EDUCATION ── */
+#education { padding: 7rem 0; }
+.edu-grid { display: flex; flex-direction: column; gap: 1rem; }
+.edu-card {
+  display: flex; gap: 1.5rem; align-items: flex-start;
+  background: var(--surface); border: 0.5px solid var(--border);
+  border-radius: 14px; padding: 1.75rem;
+  transition: border-color 0.2s;
+}
+.edu-card:hover { border-color: var(--border2); }
+.edu-icon {
+  width: 46px; height: 46px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; flex-shrink: 0;
+  border: 0.5px solid;
+}
+.edu-degree {
+  font-family: var(--display); font-size: 1rem; font-weight: 600;
+  color: var(--text); margin-bottom: 0.15rem;
+}
+.edu-spec { font-size: 0.82rem; color: var(--accent2); font-weight: 500; margin-bottom: 0.25rem; }
+.edu-inst { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.25rem; }
+.edu-year { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.04em; margin-bottom: 0.75rem; }
+.edu-cert-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.75rem; color: var(--accent2); text-decoration: none;
+  border: 0.5px solid rgba(124,111,252,0.3); border-radius: 6px;
+  padding: 4px 10px; font-weight: 500;
+  transition: border-color 0.2s, background 0.2s;
+}
+.edu-cert-link:hover { background: rgba(124,111,252,0.08); border-color: var(--accent2); }
+
 /* ── CONTACT ── */
 #contact { padding: 7rem 0 6rem; }
 .contact-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 5rem; align-items: center; }
@@ -440,6 +472,7 @@ footer {
     <li><a href="#about">About</a></li>
     <li><a href="#experience">Experience</a></li>
     <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#contact" class="nav-cta">Contact</a></li>
   </ul>
@@ -469,19 +502,19 @@ footer {
     <div class="hero-stats">
       <div class="stat">
         <div class="stat-num">6<sup>+</sup></div>
-        <div class="stat-lbl">Years in Java</div>
+        <div class="stat-lbl">Years of Experience</div>
       </div>
       <div class="stat">
-        <div class="stat-num">60<sup>%</sup></div>
-        <div class="stat-lbl">Latency cut, SyncX</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">200<sup>ms</sup></div>
-        <div class="stat-lbl">ECG latency (from ~60s)</div>
+        <div class="stat-num">4</div>
+        <div class="stat-lbl">Companies</div>
       </div>
       <div class="stat">
         <div class="stat-num">2</div>
-        <div class="stat-lbl">Industries mastered</div>
+        <div class="stat-lbl">Industries</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">AWS</div>
+        <div class="stat-lbl">Cloud Platform</div>
       </div>
     </div>
   </div>
@@ -510,9 +543,10 @@ footer {
       </div>
       <div class="about-right">
         <div class="about-body">
-          <p>I'm a Senior Backend Engineer with <strong>6 years of hands-on experience</strong> building distributed, cloud-native systems in Java, Spring Boot, and AWS. My work spans the full backend lifecycle — from system design and API architecture to async messaging pipelines, embedded integrations, and serverless deployments.</p>
-          <p>I've worked across two demanding domains: <strong>healthcare technology</strong>, where data accuracy and low latency directly affect patient outcomes, and <strong>data engineering</strong>, where performance and reliability underpin every client decision. In both, the stakes are real — and the systems have to hold.</p>
-          <p>I think in systems. Whether I'm replacing a bottlenecked REST pipeline with async messaging, designing a TCP server for device communication, or structuring serverless batch workflows, I focus on <strong>correctness first, performance second, and maintainability always</strong>. I'm equally comfortable owning architecture decisions and writing the code that executes them.</p>
+          <p>My instinct as an engineer is to <strong>understand the system before touching the code</strong>. I've found that most performance problems aren't code problems — they're design problems. The RabbitMQ overhaul that cut ECG latency wasn't clever code, it was the right architecture applied to the right place.</p>
+          <p>I'm a Senior Backend Engineer with <strong>6 years of experience</strong> building distributed, cloud-native systems in Java, Spring Boot, and AWS. My work spans the full backend lifecycle — from system design and API architecture to async messaging pipelines, embedded integrations, and serverless deployments.</p>
+          <p>I've worked in high-stakes domains where the software genuinely matters — where latency affects outcomes and downtime is not an option. That environment has made me precise about correctness, deliberate about trade-offs, and comfortable making architecture calls under pressure.</p>
+          <p>Outside engineering, I guide teams — I've mentored junior engineers on system design and implementation, and helped QA engineers understand infrastructure like Nginx, reverse proxies, and backend deployments. Good engineers make the people around them better.</p>
         </div>
       </div>
     </div>
@@ -542,7 +576,7 @@ footer {
       <div class="strength-card">
         <div class="s-icon s-icon-2">⚡</div>
         <div class="s-title">Latency & Performance Tuning</div>
-        <div class="s-desc">Track record of diagnosing real bottlenecks and fixing them fundamentally — including dropping ECG data latency from ~60 seconds to under 600ms by rethinking the entire communication model.</div>
+        <div class="s-desc">Digs into real bottlenecks and fixes them at the root — not with patches, but by rethinking the communication model entirely. Has turned unusably slow pipelines into near real-time systems in production.</div>
       </div>
       <div class="strength-card">
         <div class="s-icon s-icon-3">☁</div>
@@ -598,9 +632,9 @@ footer {
           <div class="exp-role">Software Development Engineer II</div>
           <div class="exp-company">RED Health · Bengaluru</div>
           <ul class="exp-bullets">
-            <li>Architected SyncX — collects live patient monitor data via Android and streams into AWS Kinesis for real-time clinical access in transit</li>
-            <li>Designed a scalable TCP server for SOS pendant devices with REST APIs and DynamoDB-backed real-time location tracking</li>
-            <li>Built a serverless invoice processing system for multi-hospital billing using AWS Step Functions, Lambda, SQS, ECS, and Fargate</li>
+            <li>Architected SyncX — collects live patient monitor data via an edge gateway and streams into AWS Kinesis for real-time clinical access in transit</li>
+            <li>Built a high-concurrency TCP server for SOS pendant devices using Java NIO, capable of managing thousands of simultaneous device connections on a single thread pool — backed by REST APIs and DynamoDB for real-time location tracking</li>
+            <li>Designed and implemented a batch processing pipeline for multi-hospital invoice generation using AWS Step Functions for orchestration, Lambda for compute, and SQS with ECS/Fargate for scalable job execution</li>
             <li>Applied CI/CD best practices and integrated CloudWatch monitoring across all production services</li>
           </ul>
           <div class="exp-tags">
@@ -618,10 +652,14 @@ footer {
           <div class="exp-company">RTWO Healthcare Solutions · Bengaluru</div>
           <ul class="exp-bullets">
             <li>Enhanced Spring Boot microservices for the D Assist clinical platform, supporting high-volume real-time medical data ingestion</li>
-            <li>Replaced REST polling with RabbitMQ async messaging — slashed ECG data latency from ~1 min to 200–600ms</li>
-            <li>Designed the Medication & Fluids Charts backend module, improving clinical documentation accuracy by ~30%</li>
+            <li>Replaced REST polling with RabbitMQ async messaging — significantly reduced ECG data latency, enabling near real-time clinical monitoring</li>
+            <li>Designed and implemented the Medication & Fluids Charts backend module, enabling structured clinical documentation of patient intake, output, and medication across configurable time intervals</li>
+            <li>Built time-series aggregation pipelines using Java Streams to compute per-interval fluid totals, running intake/output sums, and cumulative balance — all driven by configurable interval windows</li>
+            <li>Implemented auto-propagation of fluid values between the last recorded entry and stop time, ensuring chart continuity when a fluid is paused or stopped mid-session</li>
             <li>Integrated Plotly for live frontend data visualisation; built and maintained Jenkins CI/CD pipelines</li>
             <li>Conducted code reviews and enforced DevOps standards across development and QA environments</li>
+            <li>Mentored 3–4 junior engineers on system design, code quality, and implementation practices — covering how to think about a problem before writing a single line</li>
+            <li>Guided QA engineers on deploying backend services, configuring Nginx as a reverse proxy, and understanding the full deployment pipeline</li>
           </ul>
           <div class="exp-tags">
             <span class="exp-tag">Java</span><span class="exp-tag">Spring Boot</span><span class="exp-tag">RabbitMQ</span>
@@ -656,7 +694,7 @@ footer {
             <li>Built REST APIs for PTZ camera control and integrated them into an AngularJS frontend</li>
             <li>Engineered an ESP32-based embedded solution for medical data acquisition, eliminating laptop dependency at bedsides</li>
             <li>Implemented backend for a teleconsultation platform using JWT auth, Spring Boot, and MongoDB</li>
-            <li>Acquired real-time device data from BPL, GE, and Draeger hardware; mentored junior engineers</li>
+            <li>Acquired real-time device data from BPL, GE, and Draeger hardware</li>
           </ul>
           <div class="exp-tags">
             <span class="exp-tag">Java</span><span class="exp-tag">Spring Boot</span><span class="exp-tag">MongoDB</span>
@@ -681,18 +719,17 @@ footer {
         <span class="badge-label">Projects</span>
       </div>
       <h2 class="sec-h2">Key Projects</h2>
-      <p class="sec-sub">Systems built for demanding environments where performance has consequences.</p>
+      <p class="sec-sub">The thinking and trade-offs behind systems I've owned end-to-end.</p>
     </div>
     <div class="projects-grid reveal">
 
       <div class="proj-card c-purple">
         <div class="proj-header">
           <div class="proj-icon proj-icon-p">📡</div>
-          <span class="proj-metric-badge pm-p">60%+ latency cut</span>
         </div>
         <div class="proj-name">SyncX — Patient Vitals Streaming</div>
-        <div class="proj-meta">Healthcare · AWS Kinesis · Java · Android</div>
-        <div class="proj-desc">End-to-end platform streaming live patient monitor data from ambulances into AWS Kinesis. Backend microservices process and surface data to clinical teams, enabling real-time assessment before hospital arrival.</div>
+        <div class="proj-meta">Healthcare · AWS Kinesis · Java · Edge Gateway</div>
+        <div class="proj-desc">The core design challenge: how do you get reliable, low-latency data out of a moving vehicle with variable connectivity? The answer was an edge gateway that buffers locally and streams into AWS Kinesis — decoupling collection from processing so neither side blocks the other.</div>
         <div class="proj-tags">
           <span class="proj-tag">Java</span><span class="proj-tag">Spring Boot</span><span class="proj-tag">Kinesis</span><span class="proj-tag">AWS</span>
         </div>
@@ -701,50 +738,46 @@ footer {
       <div class="proj-card c-teal">
         <div class="proj-header">
           <div class="proj-icon proj-icon-t">🆘</div>
-          <span class="proj-metric-badge pm-t">~40% faster response</span>
         </div>
         <div class="proj-name">SOS Pendant Emergency Backend</div>
-        <div class="proj-meta">Healthcare · TCP · DynamoDB · REST</div>
-        <div class="proj-desc">Scalable TCP server handling real-time SOS pendant communication. Exposes REST APIs for dispatch integration and persists live GPS data in DynamoDB — turning a wearable button into a coordinated emergency response.</div>
+        <div class="proj-meta">Healthcare · Java NIO · TCP · DynamoDB · REST</div>
+        <div class="proj-desc">Thousands of pendant devices needed persistent connections without spawning a thread per device. Java NIO's non-blocking I/O model was the right call — a single thread pool handles the selector loop while DynamoDB absorbs the write throughput for real-time location without becoming a bottleneck.</div>
         <div class="proj-tags">
-          <span class="proj-tag">Java</span><span class="proj-tag">TCP</span><span class="proj-tag">DynamoDB</span><span class="proj-tag">REST</span>
+          <span class="proj-tag">Java NIO</span><span class="proj-tag">TCP</span><span class="proj-tag">DynamoDB</span><span class="proj-tag">REST</span>
         </div>
       </div>
 
       <div class="proj-card c-coral">
         <div class="proj-header">
           <div class="proj-icon proj-icon-c">❤️</div>
-          <span class="proj-metric-badge pm-c">~60s → 200ms</span>
         </div>
         <div class="proj-name">D Assist — ECG Pipeline Overhaul</div>
-        <div class="proj-meta">Healthcare · RabbitMQ · Async Architecture</div>
-        <div class="proj-desc">Diagnosed a core bottleneck where REST polling introduced ~1 min ECG lag. Replaced the entire communication layer with RabbitMQ async messaging — achieving near real-time performance without a full system rewrite.</div>
+        <div class="proj-meta">Healthcare · RabbitMQ · Java Streams · Async Architecture</div>
+        <div class="proj-desc">REST polling for ECG data was the wrong tool for a real-time problem — the latency was a consequence of the architecture, not the code. Switching to RabbitMQ async messaging meant the frontend received data the moment it was available, not on the next poll cycle. Also built the Fluids & Medication Charts using Java Streams pipelines for time-series aggregation.</div>
         <div class="proj-tags">
-          <span class="proj-tag">RabbitMQ</span><span class="proj-tag">Spring Boot</span><span class="proj-tag">MongoDB</span>
+          <span class="proj-tag">RabbitMQ</span><span class="proj-tag">Java Streams</span><span class="proj-tag">Spring Boot</span><span class="proj-tag">MongoDB</span>
         </div>
       </div>
 
       <div class="proj-card c-purple">
         <div class="proj-header">
           <div class="proj-icon proj-icon-p">🏥</div>
-          <span class="proj-metric-badge pm-p">Zero-ops billing</span>
         </div>
         <div class="proj-name">Multi-Hospital Invoice Engine</div>
-        <div class="proj-meta">Healthcare · Step Functions · Lambda · Fargate</div>
-        <div class="proj-desc">Serverless batch processing for invoice generation across hospital networks — orchestrated with Step Functions, compute on Lambda, queuing via SQS, containers on ECS/Fargate. Full order-level status via REST APIs.</div>
+        <div class="proj-meta">Healthcare · Batch Processing · Step Functions · Fargate</div>
+        <div class="proj-desc">Invoice generation across hospital networks is inherently a batch problem — high volume, time-insensitive, but must be auditable and fault-tolerant. Step Functions handles orchestration and retry logic, SQS decouples job dispatch from execution, and Fargate runs containerised batch jobs that scale to load without manual intervention.</div>
         <div class="proj-tags">
-          <span class="proj-tag">Lambda</span><span class="proj-tag">SQS</span><span class="proj-tag">Fargate</span><span class="proj-tag">Step Functions</span>
+          <span class="proj-tag">Batch Processing</span><span class="proj-tag">Lambda</span><span class="proj-tag">SQS</span><span class="proj-tag">Fargate</span><span class="proj-tag">Step Functions</span>
         </div>
       </div>
 
       <div class="proj-card c-teal">
         <div class="proj-header">
           <div class="proj-icon proj-icon-t">📊</div>
-          <span class="proj-metric-badge pm-t">~25% fewer issues</span>
         </div>
         <div class="proj-name">Client Forecasting Dashboard</div>
         <div class="proj-meta">Data Engineering · Node.js · Angular · PostgreSQL</div>
-        <div class="proj-desc">Full-stack dashboard replacing a manual data-entry workflow. Clients input forecasting parameters, visualise keyword trends, monitor subscription usage, and observe live processing — all in one interface.</div>
+        <div class="proj-desc">The problem wasn't building a dashboard — it was replacing a manual, error-prone process with a self-serve system clients could trust. The key design decision was separating live processing (new keywords) from cached retrieval (existing ones), so the UX felt instant regardless of what was happening underneath.</div>
         <div class="proj-tags">
           <span class="proj-tag">Node.js</span><span class="proj-tag">Angular</span><span class="proj-tag">PostgreSQL</span><span class="proj-tag">TypeORM</span>
         </div>
@@ -753,13 +786,60 @@ footer {
       <div class="proj-card c-coral">
         <div class="proj-header">
           <div class="proj-icon proj-icon-c">🔌</div>
-          <span class="proj-metric-badge pm-c">~35% cost reduction</span>
         </div>
         <div class="proj-name">ESP32 Medical Data Bridge</div>
         <div class="proj-meta">Healthcare · Embedded C · ESP32 · Hardware</div>
-        <div class="proj-desc">Embedded solution using ESP32 to collect data directly from medical devices and transmit to backend — eliminating the laptop previously required at every bedside. A hardware-level fix with immediate operational impact.</div>
+        <div class="proj-desc">The existing setup required a laptop at every bedside — expensive, fragile, and hard to scale. The ESP32 replaced it entirely: collect directly from the device, transmit over the network, no laptop in the loop. Sometimes the right architectural decision is a hardware one.</div>
         <div class="proj-tags">
           <span class="proj-tag">Embedded C</span><span class="proj-tag">ESP32</span><span class="proj-tag">Java</span><span class="proj-tag">Spring Boot</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="sec-divider"></div>
+
+<!-- EDUCATION -->
+<section id="education" class="section">
+  <div class="inner">
+    <div class="sec-header reveal">
+      <div class="sec-badge">
+        <span class="badge-num">05</span>
+        <span class="badge-line"></span>
+        <span class="badge-label">Education</span>
+      </div>
+      <h2 class="sec-h2">Education</h2>
+      <p class="sec-sub">Formal foundation backed by cloud specialisation from one of India's top institutes.</p>
+    </div>
+    <div class="edu-grid reveal">
+
+      <div class="edu-card">
+        <div class="edu-left">
+          <div class="edu-icon" style="background:rgba(124,111,252,0.1); border-color:rgba(124,111,252,0.2);">🎓</div>
+        </div>
+        <div class="edu-right">
+          <div class="edu-degree">Executive PG Programme in Software Development</div>
+          <div class="edu-spec">Specialisation · Cloud Computing</div>
+          <div class="edu-inst">International Institute of Information Technology, Bengaluru</div>
+          <div class="edu-year">May 2021</div>
+          <a href="https://api.accredible.com/v1/frontend/credential_website_embed_image/certificate/61881748" target="_blank" class="edu-cert-link">
+            <span>View Certificate</span>
+            <span style="font-size:0.7rem;">↗</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="edu-card">
+        <div class="edu-left">
+          <div class="edu-icon" style="background:rgba(52,212,191,0.08); border-color:rgba(52,212,191,0.2);">📘</div>
+        </div>
+        <div class="edu-right">
+          <div class="edu-degree">Bachelor of Science — Computer Science</div>
+          <div class="edu-spec"></div>
+          <div class="edu-inst">SDM Degree College, Ujire</div>
+          <div class="edu-year">2018</div>
         </div>
       </div>
 
@@ -774,7 +854,7 @@ footer {
   <div class="inner">
     <div class="sec-header reveal">
       <div class="sec-badge">
-        <span class="badge-num">05</span>
+        <span class="badge-num">06</span>
         <span class="badge-line"></span>
         <span class="badge-label">Skills</span>
       </div>
@@ -787,6 +867,7 @@ footer {
         <div class="skill-tags">
           <span class="skill-tag primary">Java (6 yrs)</span>
           <span class="skill-tag primary">Spring Boot</span>
+          <span class="skill-tag primary">Java Streams</span>
           <span class="skill-tag">Microservices</span>
           <span class="skill-tag">REST APIs</span>
           <span class="skill-tag">TCP Servers</span>
@@ -854,16 +935,14 @@ footer {
     <div class="contact-grid reveal">
       <div class="contact-left">
         <div class="sec-badge" style="margin-bottom:0.75rem;">
-          <span class="badge-num">06</span>
+          <span class="badge-num">07</span>
           <span class="badge-line"></span>
           <span class="badge-label">Contact</span>
         </div>
         <div class="contact-statement">
-          Open to roles <em>anywhere</em> in the world.
+          Let's build something <em>worth building.</em>
         </div>
-        <p class="contact-note">
-          Targeting Senior Backend Engineer and Senior Software Engineer roles in Healthcare Tech, Fintech, SaaS, and beyond. Open to relocation anywhere — let's build something that matters.
-        </p>
+        <p class="contact-note">Backend engineer who thinks in systems. 6 years building distributed, high-stakes software across complex domains.</p>
       </div>
       <div class="contact-links">
         <a href="mailto:sukeshpoojary190@gmail.com" class="contact-link">
