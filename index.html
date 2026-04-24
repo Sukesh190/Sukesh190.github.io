@@ -343,21 +343,32 @@ nav {
 
 /* ── SKILLS ── */
 #skills { padding: 7rem 0; }
-.skills-outer { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 0.5px solid var(--border); border-radius: 16px; overflow: hidden; }
-.skill-group { background: var(--surface); padding: 1.75rem 2rem; }
-.skill-group-title {
-  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--muted); margin-bottom: 1rem;
+.skills-outer {
+  display: flex; flex-direction: column; gap: 0;
+  border: 0.5px solid var(--border); border-radius: 12px; overflow: hidden;
 }
-.skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.skill-group {
+  display: grid; grid-template-columns: 190px 1fr;
+  align-items: center; gap: 0;
+  background: var(--surface); border-bottom: 0.5px solid var(--border);
+  padding: 0.65rem 1.5rem; transition: background 0.2s;
+}
+.skill-group:last-child { border-bottom: none; }
+.skill-group:hover { background: var(--surface2); }
+.skill-group-title {
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--accent2);
+  padding-right: 1rem; flex-shrink: 0;
+}
+.skill-tags { display: flex; flex-wrap: wrap; gap: 5px; }
 .skill-tag {
-  font-size: 0.78rem; padding: 4px 11px; border-radius: 100px;
-  background: rgba(255,255,255,0.04); color: rgba(237,233,254,0.75);
+  font-size: 0.7rem; padding: 2px 9px; border-radius: 3px;
+  background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.6);
   border: 0.5px solid var(--border2); font-weight: 400;
   transition: border-color 0.2s, color 0.2s;
 }
 .skill-tag:hover { border-color: var(--accent2); color: var(--accent2); }
-.skill-tag.primary { background: rgba(124,111,252,0.1); color: var(--accent2); border-color: rgba(124,111,252,0.25); }
+.skill-tag.primary { background: rgba(124,111,252,0.1); color: var(--accent2); border-color: rgba(124,111,252,0.25); font-weight: 600; }
 
 /* ── EDUCATION ── */
 #education { padding: 7rem 0; }
@@ -488,7 +499,7 @@ footer {
   .exp-nav { display: none; }
   .exp-entries { padding-left: 1.5rem; }
   .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-  .skills-outer { grid-template-columns: 1fr; }
+  .skills-outer { border-radius: 10px; }
   .hero-stats { gap: 2rem; flex-wrap: wrap; }
   .edu-card { flex-direction: column; gap: 1rem; }
 }
@@ -549,9 +560,9 @@ footer {
   .edu-degree { font-size: 0.92rem; }
 
   /* SKILLS */
-  .skills-outer { grid-template-columns: 1fr; border-radius: 12px; }
-  .skill-group { padding: 1.25rem; }
-  .skill-tag { font-size: 0.72rem; }
+  .skills-outer { border-radius: 10px; }
+  .skill-group { grid-template-columns: 1fr; padding: 0.75rem 1rem; gap: 0.4rem; }
+  .skill-tag { font-size: 0.68rem; }
 
   /* CONTACT */
   .contact-statement { font-size: 1.6rem; }
@@ -663,8 +674,8 @@ footer {
       </div>
       <div class="about-right">
         <div class="about-body">
-          <p>My instinct as an engineer is to <strong>understand the system before touching the code</strong>. I've found that most performance problems aren't code problems — they're design problems. The RabbitMQ overhaul that cut ECG latency wasn't clever code, it was the right architecture applied to the right place.</p>
-          <p>I'm a Senior Backend Engineer with <strong>6 years of experience</strong> building distributed, cloud-native systems in Java, Spring Boot, and AWS. My work spans the full backend lifecycle — from system design and API architecture to async messaging pipelines, embedded integrations, and serverless deployments.</p>
+          <p>Six years of backend engineering across four companies, two industries, and more production incidents than I'd like to admit. I've gone from setting up Linux servers from scratch to architecting 5G-enabled streaming platforms inside ambulances. Somewhere along the way I figured out that the best engineers aren't the ones who write the most code — they're the ones who know when not to.</p>
+          <p>Most performance problems aren't code problems. They're design problems. I've seen it enough times to be sure.</p>
           <p>I've worked in high-stakes domains where the software genuinely matters — where latency affects outcomes and downtime is not an option. That environment has made me precise about correctness, deliberate about trade-offs, and comfortable making architecture calls under pressure.</p>
           <p>Outside engineering, I guide teams — I've mentored junior engineers on system design and implementation, and helped QA engineers understand infrastructure like Nginx, reverse proxies, and backend deployments. <strong>Good engineers make the people around them better.</strong></p>
         </div>
@@ -752,8 +763,8 @@ footer {
           <div class="exp-role">Software Development Engineer II</div>
           <div class="exp-company">RED Health · Bengaluru</div>
           <ul class="exp-bullets">
-            <li>Architected SyncX — collects live patient monitor data via an edge gateway and streams into AWS Kinesis for real-time clinical access in transit</li>
-            <li>Built a high-concurrency TCP server for SOS pendant devices using Java NIO, capable of managing thousands of simultaneous device connections on a single thread pool — backed by REST APIs and DynamoDB for real-time location tracking</li>
+            <li>Architected SyncX — a 5G-enabled patient vitals streaming platform deployed inside ambulances; collects ECG, vital signs, and medical device data via an edge gateway and streams into AWS Kinesis with sub-2-second latency, enabling ER doctors to remotely diagnose and guide paramedics before the patient arrives at hospital</li>
+            <li>Built a high-concurrency TCP server for SOS pendant devices using Java NIO, capable of managing thousands of simultaneous device connections on a single thread pool — backed by REST APIs and DynamoDB for live location tracking</li>
             <li>Designed and implemented a batch processing pipeline for multi-hospital invoice generation using AWS Step Functions for orchestration, Lambda for compute, and SQS with ECS/Fargate for scalable job execution</li>
             <li>Applied CI/CD best practices and integrated CloudWatch monitoring across all production services</li>
           </ul>
@@ -771,13 +782,10 @@ footer {
           <div class="exp-role">Technical Specialist</div>
           <div class="exp-company">RTWO Healthcare Solutions · Bengaluru</div>
           <ul class="exp-bullets">
-            <li>Enhanced Spring Boot microservices for the D Assist clinical platform, supporting high-volume real-time medical data ingestion</li>
-            <li>Replaced REST polling with RabbitMQ async messaging — significantly reduced ECG data latency, enabling near real-time clinical monitoring</li>
-            <li>Designed and implemented the Medication & Fluids Charts backend module, enabling structured clinical documentation of patient intake, output, and medication across configurable time intervals</li>
-            <li>Built time-series aggregation pipelines using Java Streams to compute per-interval fluid totals, running intake/output sums, and cumulative balance — all driven by configurable interval windows</li>
-            <li>Implemented auto-propagation of fluid values between the last recorded entry and stop time, ensuring chart continuity when a fluid is paused or stopped mid-session</li>
-            <li>Integrated Plotly for live frontend data visualisation; built and maintained Jenkins CI/CD pipelines</li>
-            <li>Conducted code reviews and enforced DevOps standards across development and QA environments</li>
+            <li>Enhanced backend microservices for CritiXpert — an advanced critical care data capture platform that automates recording of vital signs, medical interventions, and treatment plans for remote physician monitoring</li>
+            <li>Replaced REST polling with RabbitMQ async messaging — reduced ECG data latency from ~60 seconds to 200–600ms, enabling near real-time clinical monitoring on the CritiXpert platform</li>
+            <li>Designed and implemented the Medication & Fluids Charts backend module for CritiXpert using Java Streams pipelines — aggregating time-series fluid data, computing per-interval totals and running intake/output sums, with auto-propagation to maintain chart continuity when infusions are paused or stopped mid-session</li>
+            <li>Set up and managed on-premise Linux servers from OS installation — provisioned separate DEV and QA environments, each running behind Nginx as a reverse proxy with upstream server configuration; integrated Jenkins CI/CD pipelines for automated deployments across both environments</li>
             <li>Mentored junior engineers through structured sessions on Spring Boot, REST API design, and building end-to-end web applications — reinforced through PR-based code reviews until each engineer reached independent fluency</li>
             <li>Trained QA engineers on the full deployment stack — Nginx reverse proxy configuration, upstream server setup, SSL certificates, and domain mapping — through hands-on sessions backed by written documentation</li>
           </ul>
@@ -810,11 +818,10 @@ footer {
           <div class="exp-role">Software Engineer</div>
           <div class="exp-company">RTWO Healthcare Solutions · Bengaluru</div>
           <ul class="exp-bullets">
-            <li>Deployed and supported RealTimeDeviceConnect at hospital sites — configured networks to connect medical devices on Linux</li>
-            <li>Built REST APIs for PTZ camera control and integrated them into an AngularJS frontend</li>
-            <li>Engineered an ESP32-based embedded solution for medical data acquisition, eliminating laptop dependency at bedsides</li>
-            <li>Implemented backend for a teleconsultation platform using JWT auth, Spring Boot, and MongoDB</li>
-            <li>Acquired real-time device data from BPL, GE, and Draeger hardware</li>
+            <li>Deployed and supported ICU-Connect (RealTimeDeviceConnect) at hospital sites — a continuous ICU patient monitoring solution that sends immediate alerts to doctors for medical intervention decisions</li>
+            <li>Built REST APIs using Java and Spring Boot for PTZ camera control and integrated them into the Connect Engine frontend — a care team collaboration tool built on AngularJS for live medical information sharing</li>
+            <li>Engineered an ESP32-based embedded solution for medical data acquisition from BPL, GE, and Draeger devices — eliminating laptop dependency at bedsides and significantly reducing infrastructure costs</li>
+            <li>Implemented backend for VaraCare — a telemedicine platform supporting high-quality video consultations, configurable drug database for prescriptions, and activity tracking for doctor performance; built using JWT auth, Spring Boot, and MongoDB</li>
           </ul>
           <div class="exp-tags">
             <span class="exp-tag">Java</span><span class="exp-tag">Spring Boot</span><span class="exp-tag">MongoDB</span>
@@ -847,11 +854,11 @@ footer {
         <div class="proj-header">
           <div class="proj-icon proj-icon-p">📡</div>
         </div>
-        <div class="proj-name">SyncX — Patient Vitals Streaming</div>
-        <div class="proj-meta">Healthcare · AWS Kinesis · Java · Edge Gateway</div>
-        <div class="proj-desc">The core design challenge: how do you get reliable, low-latency data out of a moving vehicle with variable connectivity? The answer was an edge gateway that buffers locally and streams into AWS Kinesis — decoupling collection from processing so neither side blocks the other.</div>
+        <div class="proj-name">SyncX — 5G Patient Vitals Platform</div>
+        <div class="proj-meta">RED Health · AWS Kinesis · Java · 5G · Edge Gateway</div>
+        <div class="proj-desc">How do you stream live ECGs and vitals from a moving ambulance with sub-2-second latency? The answer was a 5G-enabled edge gateway that buffers locally and streams into AWS Kinesis — decoupling collection from processing so ER doctors can remotely diagnose and guide paramedics before the patient even arrives at hospital.</div>
         <div class="proj-tags">
-          <span class="proj-tag">Java</span><span class="proj-tag">Spring Boot</span><span class="proj-tag">Kinesis</span><span class="proj-tag">AWS</span>
+          <span class="proj-tag">Java</span><span class="proj-tag">Spring Boot</span><span class="proj-tag">Kinesis</span><span class="proj-tag">5G</span><span class="proj-tag">AWS</span>
         </div>
       </div>
 
@@ -861,7 +868,7 @@ footer {
         </div>
         <div class="proj-name">SOS Pendant Emergency Backend</div>
         <div class="proj-meta">Healthcare · Java NIO · TCP · DynamoDB · REST</div>
-        <div class="proj-desc">Thousands of pendant devices needed persistent connections without spawning a thread per device. Java NIO's non-blocking I/O model was the right call — a single thread pool handles the selector loop while DynamoDB absorbs the write throughput for real-time location without becoming a bottleneck.</div>
+        <div class="proj-desc">Thousands of pendant devices needed persistent connections without spawning a thread per device. Java NIO's non-blocking I/O model was the right call — a single thread pool handles the selector loop while DynamoDB absorbs the write throughput for live location tracking without becoming a bottleneck.</div>
         <div class="proj-tags">
           <span class="proj-tag">Java NIO</span><span class="proj-tag">TCP</span><span class="proj-tag">DynamoDB</span><span class="proj-tag">REST</span>
         </div>
@@ -871,9 +878,9 @@ footer {
         <div class="proj-header">
           <div class="proj-icon proj-icon-c">❤️</div>
         </div>
-        <div class="proj-name">D Assist — ECG Pipeline Overhaul</div>
-        <div class="proj-meta">Healthcare · RabbitMQ · Java Streams · Async Architecture</div>
-        <div class="proj-desc">REST polling for ECG data was the wrong tool for a real-time problem — the latency was a consequence of the architecture, not the code. Switching to RabbitMQ async messaging meant the frontend received data the moment it was available, not on the next poll cycle. Also built the Fluids & Medication Charts using Java Streams pipelines for time-series aggregation.</div>
+        <div class="proj-name">CritiXpert — ECG Pipeline Overhaul</div>
+        <div class="proj-meta">RTWO Healthcare · RabbitMQ · Java Streams · Async Architecture</div>
+        <div class="proj-desc">REST polling for ECG data on CritiXpert was the wrong tool for a real-time problem — the latency was a consequence of the architecture, not the code. Switching to RabbitMQ async messaging meant the frontend received data the moment it was available. Also built the Fluids & Medication Charts module using Java Streams pipelines for time-series aggregation.</div>
         <div class="proj-tags">
           <span class="proj-tag">RabbitMQ</span><span class="proj-tag">Java Streams</span><span class="proj-tag">Spring Boot</span><span class="proj-tag">MongoDB</span>
         </div>
@@ -907,11 +914,11 @@ footer {
         <div class="proj-header">
           <div class="proj-icon proj-icon-c">🔌</div>
         </div>
-        <div class="proj-name">ESP32 Medical Data Bridge</div>
-        <div class="proj-meta">Healthcare · Embedded C · ESP32 · Hardware</div>
-        <div class="proj-desc">The existing setup required a laptop at every bedside — expensive, fragile, and hard to scale. The ESP32 replaced it entirely: collect directly from the device, transmit over the network, no laptop in the loop. Sometimes the right architectural decision is a hardware one.</div>
+        <div class="proj-name">ICU-Connect · VaraCare · ESP32 Bridge</div>
+        <div class="proj-meta">RTWO Healthcare · Embedded C · ESP32 · Java · MongoDB</div>
+        <div class="proj-desc">Three systems, one role. ICU-Connect — continuous ICU monitoring with immediate physician alerts. VaraCare — a telemedicine platform with video consultations, drug database, and doctor performance tracking. ESP32 bridge — eliminated the laptop at every bedside by collecting device data directly and transmitting to backend. Sometimes the right call is a hardware one.</div>
         <div class="proj-tags">
-          <span class="proj-tag">Embedded C</span><span class="proj-tag">ESP32</span><span class="proj-tag">Java</span><span class="proj-tag">Spring Boot</span>
+          <span class="proj-tag">Embedded C</span><span class="proj-tag">ESP32</span><span class="proj-tag">Java</span><span class="proj-tag">Spring Boot</span><span class="proj-tag">MongoDB</span>
         </div>
       </div>
 
@@ -983,20 +990,39 @@ footer {
     </div>
     <div class="skills-outer reveal">
       <div class="skill-group">
-        <div class="skill-group-title">Backend & Architecture</div>
+        <div class="skill-group-title">Languages</div>
         <div class="skill-tags">
-          <span class="skill-tag primary">Java (6 yrs)</span>
-          <span class="skill-tag primary">Spring Boot</span>
-          <span class="skill-tag primary">Java Streams</span>
-          <span class="skill-tag">Microservices</span>
-          <span class="skill-tag">REST APIs</span>
-          <span class="skill-tag">TCP Servers</span>
-          <span class="skill-tag">JWT Auth</span>
-          <span class="skill-tag">Node.js</span>
+          <span class="skill-tag primary">Java 21</span>
+          <span class="skill-tag primary">Kotlin</span>
+          <span class="skill-tag primary">TypeScript</span>
+          <span class="skill-tag">Embedded C</span>
         </div>
       </div>
       <div class="skill-group">
-        <div class="skill-group-title">AWS Cloud</div>
+        <div class="skill-group-title">Frameworks</div>
+        <div class="skill-tags">
+          <span class="skill-tag primary">Spring Boot</span>
+          <span class="skill-tag">Angular</span>
+          <span class="skill-tag">ExpressJS</span>
+          <span class="skill-tag">Java Executor Framework</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Architecture & Patterns</div>
+        <div class="skill-tags">
+          <span class="skill-tag primary">Microservices</span>
+          <span class="skill-tag primary">Event-Driven Architecture</span>
+          <span class="skill-tag">REST APIs</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Runtime & Platforms</div>
+        <div class="skill-tags">
+          <span class="skill-tag primary">Node.js</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Cloud (AWS)</div>
         <div class="skill-tags">
           <span class="skill-tag primary">Kinesis</span>
           <span class="skill-tag primary">Lambda</span>
@@ -1022,18 +1048,11 @@ footer {
         <div class="skill-tags">
           <span class="skill-tag">Jenkins CI/CD</span>
           <span class="skill-tag">Linux</span>
-          <span class="skill-tag">Spring Test</span>
-          <span class="skill-tag">Code Review</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-title">Frontend & Embedded</div>
-        <div class="skill-tags">
-          <span class="skill-tag">TypeScript</span>
-          <span class="skill-tag">Angular 8</span>
-          <span class="skill-tag">Plotly</span>
-          <span class="skill-tag">Embedded C</span>
+          <span class="skill-tag">Nginx</span>
+          <span class="skill-tag">JWT Auth</span>
           <span class="skill-tag">ESP32</span>
+          <span class="skill-tag">Spring Test Framework</span>
+          <span class="skill-tag">Code Review</span>
         </div>
       </div>
       <div class="skill-group">
